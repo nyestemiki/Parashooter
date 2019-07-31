@@ -10,10 +10,15 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] private GameObject player;
     [SerializeField] private Text displayDistanceLeftWindow;
     [SerializeField] private GameObject startScreen;
-    private float currentHeight;
+    [SerializeField] private GameObject lostScreen;
+    [SerializeField] private float currentHeight;
     private Rigidbody rigidbody;
     private float hideBorder;
     private bool isStarted = false;
+
+    void Awake() {
+        lostScreen.SetActive(false);
+    }
 
     void Start() {
         rigidbody = player.GetComponent<Rigidbody>();
@@ -33,8 +38,9 @@ public class GameManager : Singleton<GameManager> {
             return;
         }
 
+        currentHeight = Mathf.Abs(transform.position.y - ground.transform.position.y);
+
         if (currentHeight > hideBorder) {
-            currentHeight = Mathf.Abs(transform.position.y - ground.transform.position.y); 
             displayDistanceLeftWindow.text = currentHeight.ToString("0");
         } else {
             displayDistanceLeftWindow.text = "";
@@ -42,6 +48,10 @@ public class GameManager : Singleton<GameManager> {
 
         if (Input.GetMouseButtonDown(0)) {
             ActivateParashoot();
+        }
+
+        if (currentHeight < 2) {
+            Lost();
         }
     }
 
@@ -60,7 +70,7 @@ public class GameManager : Singleton<GameManager> {
     }
 
     private float GetRandomDrag() {
-        return (new System.Random()).Next(0, 10);
+        return (new System.Random()).Next(0, 1);
     }
 
     private float GetRandomAngularDrag() {
@@ -69,5 +79,9 @@ public class GameManager : Singleton<GameManager> {
 
     private float GetRandomHideDistanceDisplay() {
         return (new System.Random()).Next(100, 500);
+    }
+
+    private void Lost() {
+        lostScreen.SetActive(true);
     }
 }
