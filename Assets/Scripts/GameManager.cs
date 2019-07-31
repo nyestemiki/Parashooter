@@ -27,6 +27,8 @@ public class GameManager : Singleton<GameManager> {
         rigidbody.mass = mass;
         rigidbody.drag = drag;
         rigidbody.angularDrag = angularDrag;
+
+        currentHeight = Mathf.Abs(transform.position.y - ground.transform.position.y); 
     }
 
     void Update() {
@@ -38,8 +40,14 @@ public class GameManager : Singleton<GameManager> {
         // rigidbody.drag = drag;
         // rigidbody.angularDrag = angularDrag;
 
-        currentHeight = Mathf.Abs(transform.position.y - ground.transform.position.y); 
-        displayDistanceLeftWindow.text = currentHeight.ToString("0");
+        
+
+        if (currentHeight < 200) {
+            displayDistanceLeftWindow.text = "";
+        } else {
+            currentHeight = Mathf.Abs(transform.position.y - ground.transform.position.y); 
+            displayDistanceLeftWindow.text = currentHeight.ToString("0");
+        }
 
         if (Input.GetMouseButtonDown(0)) {
             ActivateParashoot();
