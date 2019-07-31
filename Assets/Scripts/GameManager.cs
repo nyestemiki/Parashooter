@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
@@ -55,18 +56,18 @@ public class GameManager : Singleton<GameManager> {
     }
 
     private float GetRandomMass() {
-        return new Random().Next(50, 150);
+        return (new System.Random()).Next(50, 150);
     }
 
     private float GetRandomDrag() {
-        return new Random().Next(0, 10);
+        return (new System.Random()).Next(0, 10);
     }
 
     private float GetRandomAngularDrag() {
-        return new Random().Next(0.05, 1);
+        return (new System.Random()).Next(0, 1);
     }
 
     private float GetRandomHideDistanceDisplay() {
-        return new Random().Next(100, 500);
+        return (new System.Random()).Next(100, 500);
     }
 }
